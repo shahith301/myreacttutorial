@@ -1,0 +1,297 @@
+
+21-11-2022
+Create a simple app that takes Name and Password and display it on Button Click
+
+import React,{Component} from 'react';
+import './Working.css';
+
+class Login extends Component{
+
+    render(){
+        return(
+            <div class="kent">
+            <h1>Login screen</h1>
+            <label for="userName">UserName:</label><input type="text" name="userName" id="userName"/>
+            <label for="password">password</label><input type="password" name="password"/><br></br>
+            <button value="submit" onclick={this.tre}>Submit</button>
+            </div>
+        );
+                   
+}
+}
+
+
+
+export default Login;
+
+
+Components(22-11-2022)
+
+Create a Simple Class component
+
+import React, { Component } from 'react';  
+class App extends Component{  
+   render(){  
+      return(  
+         <div>  
+            <h1>JavaTpoint</h1>  
+          <h2>Training Institutes</h2>  
+            <p>This website contains the best CS tutorials.</p>  
+         </div>  
+      );  
+   }  
+}  
+export default App; 
+
+
+Create a simple functional component
+
+import React from 'react';
+
+function WelcomeMsg(){
+    return(
+        <div>
+        <h1>This is function Component Demo</h1>
+        <h1>easy to access</h1>
+        </div>
+    )
+};
+
+export default WelcomeMsg;
+
+
+Create app that displays list of students in the Class
+
+import React from 'react';
+
+class ClassComponentDemo extends React.Component{
+
+    constructor(){
+        super();
+        this.state = {
+            studentList : [
+                { "name": "Ajay", "email": "ajay@gmail.com"},
+                { "name": "Ranjith", "email": "Ranjith@gmail.com"},
+            ]
+
+        };
+    }
+
+    render(){
+        return (
+            <div>
+            <h1>Student Details</h1>
+            {this.state.studentList.map((name) => <Student studentDetails={name} /> )}
+            </div>
+        );
+
+    };
+
+
+}
+
+class Student  extends React.Component {
+    render(){
+        return (
+            <ul> <li> <h3>{this.props.studentDetails.name} - {this.props.studentDetails.email}</h3></li></ul>
+        );
+    };
+
+}
+
+export default ClassComponentDemo;
+
+
+23/11/2022
+
+ClassStateDemo.js
+
+import React from 'react';
+
+class ClassStateDemo extends React.Component{
+
+    constructor(){
+        super();
+        this.state={
+            displayMoreInfo :false
+        };
+        this.toggleDisplay =this.toggleDisplay.bind(this);
+    }
+
+
+toggleDisplay(){
+    this.setState({displayMoreInfo: !this.state.displayMoreInfo});
+}
+
+render(){
+    const info=this.state.displayMoreInfo ?
+    <ul>
+        <li>Basics</li>
+        <li>JSX</li>
+        <li>Components</li>
+        <li>state and props</li>
+        <li>Event Handling</li>
+        
+    </ul>
+    :null;
+
+    return(
+        <div><h1>React Js Course Summary</h1><br></br>
+        {this.state.displayMoreInfo?
+        (<div>
+        {info} 
+        <button onClick={this.toggleDisplay}>Show Less</button>
+        </div>)
+        :(<div>
+            <button onClick={this.toggleDisplay}>Show More</button>
+            </div>)
+
+            }
+
+        </div>
+
+    )
+        
+}
+}
+
+export default ClassStateDemo;
+
+
+24/11/2022
+
+   Handle event in legacy style with preventdefault etc 
+   Handle event in ES6 class
+
+import React from 'react';
+
+class EventHandling extends React.Component{
+
+    handleEvent = (msg) => {
+        alert(msg);
+    }
+
+    render(){
+        return(
+            <div>
+                <h1> Event Handling Demo </h1>
+                <button type="submit" onClick={() => this.handleEvent("Hello this is Event handling")}>Submit</button>
+            </div>
+
+        );
+    }
+
+}
+
+export default EventHandling;
+
+Create a class component and initialize the books state in constructor and have a add book button and add new book to booklist in the set state and display them.
+
+import React, {Component} from 'react';
+
+class Book extends Component {
+
+constructor(){
+    super();
+
+    this.state = {
+     bookList : [
+         {"bookName": "Java", "author": "Ajay"},
+         {"bookName": "React", "author": "John"}
+     ]   
+    };
+    this.addBook = this.addBook.bind(this);
+}
+addBook(){
+this.setState({bookList: [{"bookName": "React1", "author": "John"}]});
+}
+
+render(){
+    return(
+        <div>
+        <h1> Available Book List </h1>
+        {
+            this.state.bookList.map( (book) =>  <BookDetails bookDetails={book} />)
+        }
+        <button type='submit' onClick={this.addBook}>Add Book</button>
+        </div>
+    );
+}
+
+}
+
+
+
+class BookDetails  extends React.Component {
+    render(){
+        return (
+            <ul> <li> <h3>{this.props.bookDetails.bookName} - {this.props.bookDetails.author}</h3></li></ul>
+        );
+    };
+
+}
+
+
+export default Book;
+
+25/11/2022
+ComponentLifeCycleDemo.js
+
+import React from 'react';
+
+class ComponentLifeCycle extends React.Component{
+
+    constructor(){
+        super();
+        this.state = {
+            count: 0
+        }
+    }
+
+    incrementCounter = () => {
+        this.setState({count: this.state.count + 1});
+    }
+    //Mounting phase
+    componentWillMount(){
+        console.log('componentWillMount called');
+    }
+    componentDidMount(){
+        console.log('componentDidMount called');
+    }
+
+    //Updating Phase
+    componentWillReceiveProps(newProps){
+        console.log('componentWillReceiveProps called');
+    }
+    shouldComponentUpdate(newProps, newState){
+        console.log('shouldComponentUpdate called'); 
+        return true;
+    }
+    componentWillUpdate(nextProps, nextState) {  
+        console.log('componentWillUpdate called');  
+     }  
+     componentDidUpdate(prevProps, prevState) {  
+        console.log('componentDidUpdate called')  
+     }  
+
+     //UnMount phase
+     componentWillUnmount() {  
+        console.log('componentWillUnmount called')  
+     }  
+
+
+
+    render(){
+        return (
+            <div>
+                <h1>Component LifeCycle Demo</h1>
+                <h2>Counter : {this.state.count} </h2>
+                <button type="submit" onClick={this.incrementCounter} >Increment</button>
+            </div>
+
+        );
+    }
+};
+
+export default ComponentLifeCycle;
+
